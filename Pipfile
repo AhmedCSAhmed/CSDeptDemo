@@ -6,7 +6,8 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-socketio = "*"
-profanity-check = "*"
+alt-profanity-check = "*"
+gunicorn = "*"
 
 [dev-packages]
 

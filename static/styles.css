@@ -75,3 +75,43 @@ body{
 .modal-header{
 	border-bottom: 0px solid #dee2e6;
 }
+
+/* CHATROOM */
+#chatroom {
+	border-radius: 10px;
+	padding: 10px;
+	width: 90vw;
+	overflow-y: auto;
+	max-height: 80vh;
+}
+
+#chatroom::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+#chatroom::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+#chatroom::-webkit-scrollbar-thumb
+{
+	background-color: #F90;	
+	background-image: -webkit-linear-gradient(45deg,
+	                                          rgba(255, 255, 255, .2) 25%,
+											  transparent 25%,
+											  transparent 50%,
+											  rgba(255, 255, 255, .2) 50%,
+											  rgba(255, 255, 255, .2) 75%,
+											  transparent 75%,
+											  transparent)
+}
+
+@media (min-width: 768px) {
+	#chatroom {
+		width: 75vw;
+	}
+}

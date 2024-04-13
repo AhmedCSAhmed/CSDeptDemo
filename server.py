@@ -1,5 +1,6 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from flask_socketio import SocketIO
+from profanity_check import predict
 
 app = Flask(__name__, static_url_path='/static')
 socketio = SocketIO(app)
@@ -9,16 +10,37 @@ def hello_world():
     if request.method == "POST":
         # User message recieved, process it.
 
-        # Get message from user
-        message = request.form.get('message')
-        return "<p>Hello, World!</p>"
+        email = request.json.get('email')
+        message = request.json.get('message')
+        
+        if predict([message])[0] == 0:
+            # If the message is clean. Emit then send success response.
+            if len(message) > 128:
+                return jsonify(
+                    {
+                        "status": "error",
+                        "message": "Message is too long."
+                    }
+                )
+            
+            socketio.emit('chatroom', {'data': message, 'email': email})
+            return jsonify(
+                {
+                    "status": "success"
+                }
+            )
+        else:
+            # If the message isn't clean.
+            return jsonify(
+                {
+                    "status": "error",
+                    "message": "Message contains inappropriate content."
+                }
+            )
     else:
         # Send HTML Page
         return render_template('index.html')
     
-@socketio.on('chatroom')
-def handle_message(message):
-    print(message['data'])
 
 if __name__ == "__main__":
     socketio.run(app)
