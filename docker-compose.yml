@@ -1,0 +1,25 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: gunicorn --bind 0.0.0.0:5000 server:app
+    expose:
+      - "5000"
+    networks:
+      - flask_network
+
+  nginx:
+    build:
+      context: /proxy
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    networks:
+      - flask_network
+
+networks:
+  flask_network:
+    driver: bridge

@@ -8,6 +8,8 @@ flask = "*"
 flask-socketio = "*"
 alt-profanity-check = "*"
 gunicorn = "*"
+gevent = "*"
+gevent-websocket = "*"
 
 [dev-packages]
 
